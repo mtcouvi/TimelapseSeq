@@ -1,6 +1,22 @@
 # TimelapseSeq Mismatch calling
 
-1. ProcessAlignments_TimelapseSeq_MT_withDups.sh <libName> <MapMethod> <MTstatus> <data>
+### Preprocessing steps:  
+    a. Trim adaptors: TrimAdapter_Timelapse.sh  
+    b. Align: MapForGRANDSLAM.sh  
+    c. Filter reads:  
+        opt1. Mito-mapping reads: ExtractMitoReadsForGRANDSLAM.sh  
+        opt2. Top genes:  
+            c2a. Combine readCounts files (from STAR)
+            c2b. AddGeneName_RPKMS_customGTF.R
+            c2c. ChooseTopGenesSummingNreadsANDSelectGenesInBed.R  
+                If using a new genome, will need to make the bed file for this script with GENCODE_gtf2bed.py
+         
+
+
+### Running Mismatch scripts
+1. ProcessAlignments_TimelapseSeq_MT_withDups.sh libName MapMethod MTstatus data   
+or  
+ProcessAlignments_TimelapseSeq_ChooseTopGenes_withDups.sh libName MapMethod geneNum data
 
     ** Be sure fasta path in findMismatches_complete_20_02_28_MC.R matches reference used for mapping: this info is set on command line with <data> ***
 
